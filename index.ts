@@ -3,7 +3,7 @@ import {exec} from "child_process"
 import fs from "fs";
 
 
-function execute(command: string, callback: any, ws: ServerWebSocket<unknown>) {
+function execute(command: string, callback: any) {
     let ls = exec(command,callback);
 
     if (ls.stdout === null || ls.stderr === null){
@@ -41,7 +41,7 @@ function execute(command: string, callback: any, ws: ServerWebSocket<unknown>) {
         console.log(`child process exited with code ${code}`);
     });
 
-    ws.send(buffer);
+    // ws.send(buffer);
 
 }
 
@@ -57,7 +57,7 @@ function logResult(output: any) {
 
 
 const server = Bun.serve({
-    port: 3001,
+    port: 3002,
     fetch (request, server) {
         if (server.upgrade(request)){
             return;
@@ -80,9 +80,8 @@ const server = Bun.serve({
                 
                 case "new-project":
                     execute(
-                        "mkdir projects && cd projects && cargo stylus new project > output.txt 2>&1",
-                        logResult,
-                        ws
+                        "cd project && make",
+                        logResult
                     );
 
                     ws.send("code compiled");
@@ -95,8 +94,7 @@ const server = Bun.serve({
 
                     execute(
                         "cd projects && cd project && cargo stylus check > output.txt 2>&1",
-                        logResult,
-                        ws
+                        logResult
                     );
 
                     ws.send("Completed");
@@ -106,7 +104,6 @@ const server = Bun.serve({
                     execute(
                         "cd projects && cd project && cargo stylus export-abi --json > abi.json 2>&1",
                         logResult,
-                        ws
                     );
                     ws.send("Created");
                     break;

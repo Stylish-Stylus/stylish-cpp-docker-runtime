@@ -1,7 +1,7 @@
 STACK_SIZE=1024
 CC=clang
-LD=/home/atmegabuzz/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/bin/gcc-ld/wasm-ld
-CFLAGS=-I../../include/ -Iinterface-gen/ --target=wasm32 -Os --no-standard-libraries -mbulk-memory -Wall -g
+LD=wasm-ld
+CFLAGS=-Istylus-sdk-c/include/ -Iinterface-gen/ --target=wasm32 -Os --no-standard-libraries -mbulk-memory -Wall -g
 LDFLAGS=-O2 --no-entry --stack-first -z stack-size=$(STACK_SIZE) -Bstatic
 
 OBJECTS=main.o

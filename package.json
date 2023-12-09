@@ -1,5 +1,8 @@
 {
   "name": "stylus-cpp-docker",
+  "scripts": {
+    "dev": "bun run --hot index.ts"
+  },
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
