@@ -1,0 +1,8 @@
+version: '3'
+services:
+  bun-app:
+    build: .
+    ports:
+      - "3002:3002"
+    volumes:
+      - .:/app
